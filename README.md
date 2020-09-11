@@ -146,3 +146,4 @@ It's not working :<
    Sorry about that. Ask a question on the forum and I'll try to help:
    http://forums.svencoop.com/showthread.php/42021-Glitch-Life-program?p=505531#post505531
  
+Sorry for messedup readme...
