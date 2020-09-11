@@ -245,13 +245,6 @@ int add_gsrand_ents(Entity ** ents)
 		ent->addKeyvalue("targetname", "game_playerspawn");
 	}
 
-	if (vertMode & VERT_FLIP)
-	{
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_disable_autoclimb");
-		ent->addKeyvalue("message", "0");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-	}
 
 	if (fogEnabled && !hasFog && entMode != ENT_NONE && rand() % 3 == 0)
 	{
@@ -270,10 +263,7 @@ int add_gsrand_ents(Entity ** ents)
 				range = 768; // kind of close
 			}
 		}
-		ents[idx++] = ent = new Entity("env_fog");
-		ent->addKeyvalue("rendercolor", str(rand() % 256) + " " + str(rand() % 256) + " " + str(rand() % 256) );
-		ent->addKeyvalue("iuser2", str(dist));
-		ent->addKeyvalue("iuser3", str(range));
+
 	}
 
 	bool should_effects = sndEffects == 2 || (sndEffects == 1 && (sndMode == SND_ALL || sndMode == SND_WORLD));
@@ -297,81 +287,6 @@ int add_gsrand_ents(Entity ** ents)
 		}
 	}
 
-	ents[idx++] = ent = new Entity("trigger_auto");
-	ent->addKeyvalue("delay", "1");
-	ent->addKeyvalue("triggerstate", "1");
-	ent->addKeyvalue("target", "gsrand_cvars");
-
-	if (entMode == ENT_SUPER)
-	{
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_respawndelay");
-		ent->addKeyvalue("message", "1");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "sv_maxspeed");
-		ent->addKeyvalue("message", "350");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-		
-		if (gravityEnabled && texMode != TEX_NONE && grapple_mode == GRAPPLE_HOOK && rand() % 5)
-		{
-			ents[idx++] = ent = new Entity("trigger_setcvar");
-			ent->addKeyvalue("m_iszCVarToChange", "sv_gravity");
-			
-			if (rand() % 20)
-			{
-				if (rand() % 2) ent->addKeyvalue("message", "400");
-				else ent->addKeyvalue("message", "100");
-			}
-			else 
-				ent->addKeyvalue("message", "4000");
-			
-
-			ent->addKeyvalue("targetname", "gsrand_cvars");
-		}
-
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_banana");
-		ent->addKeyvalue("message", "1");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_disablegaussjump");
-		ent->addKeyvalue("message", "0");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_disable_autoclimb");
-		ent->addKeyvalue("message", "0");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-
-		ents[idx++] = ent = new Entity("trigger_setcvar");
-		ent->addKeyvalue("m_iszCVarToChange", "mp_npckill");
-		ent->addKeyvalue("message", "1");
-		ent->addKeyvalue("targetname", "gsrand_cvars");
-	}
-	if (cheatNoclip || cheatGodmode || cheatImpulse)
-	{
-		bool uses_name = false;
-		for (int i = 0; i < MAX_MAP_ENTITIES; ++i)
-		{
-			if (ents[i] == NULL)
-				break;
-			string cname = ents[i]->keyvalues["classname"];
-			if ( matchStr(cname, "info_player_coop") || matchStr(cname, "info_player_dm2") || 
-				    matchStr(cname, "info_player_start") )
-				ents[i]->keyvalues["classname"] = cname = "info_player_deathmatch";
-			if (matchStr(cname, "info_player_deathmatch"))
-			{
-				if (ents[i]->keyvalues["netname"].length())
-					uses_name = true;
-				ents[i]->keyvalues["netname"] = "gsrand_player";
-			}
-		}
-		if (uses_name)
-			println("Warning: cheats enabled in gsrand_config.txt broke some map functionality.");
-	}
 	return idx;
 }
 

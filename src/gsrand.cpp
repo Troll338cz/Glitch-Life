@@ -668,7 +668,7 @@ void parse_settings_file()
 						vertScaleX = vertScaleY = vertScaleZ = atof(values[0].c_str());
 				}
 				else if (setting_name.find("corruption_blend") == 0) 
-					vertDistort = atoi(setting_value.c_str());
+					vertDistort = atoi(setting_value.c_str() );
 				if (setting_name.find("random_seed") == 0)
 				{
 					random_seed = setting_value;
@@ -1910,15 +1910,15 @@ int randomize_maps()
 				else			vertDistort = 2;
 				if (vertMode & VERT_SCALE) vertDistort *= vertScaleX;
 
-				if (!singleplayer) vertMode &= ~VERT_DISTORT; // unstable on dedicated servers
+				//if (!singleplayer) vertMode &= ~VERT_DISTORT; // unstable on dedicated servers
 			}
 		}
 
 		bool will_embed = texMode == TEX_MAP;
 		bool should_hook = grapple_mode == GRAPPLE_HOOK_ALWAYS || ((entMode == ENT_SUPER || corruptMode != CORRUPT_NONE) && grapple_mode == GRAPPLE_HOOK);
 		bool tex_corrupt = corruptMode != CORRUPT_NONE && ctexMode >= CTEX_WHITE;
-		if (texMode == TEX_NONE && (should_hook || tex_corrupt))
-			embedAllTextures(map, ents); // we need to rename everything to xeno_grapple!
+		//if (texMode == TEX_NONE && (should_hook || tex_corrupt))
+		//	embedAllTextures(map, ents); // we need to rename everything to xeno_grapple!
 
 		if (texMode != TEX_NONE)
 		{
@@ -2001,8 +2001,8 @@ int randomize_maps()
 			ripent(map, ents, false);
 		}
 
-		createSKL(path, mapName);
-		createMOTD(path, mapName);
+		//createSKL(path, mapName);
+		//createMOTD(path, mapName);
 
 		vector<string> res_files = create_res_list(ents, mapName); // appends to res_list
 		create_res_file(res_files, ents, path, mapName);

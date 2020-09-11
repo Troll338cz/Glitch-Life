@@ -455,25 +455,17 @@ void writeMonsterSoundLists(string mapname)
 	{
 		if (monsters[i] > 0)
 		{
+			int group = rand() % NUM_SND_DIRS;
 			string filename = "maps/" + mapname + "_" + mdirs[i] + ".gsrand";
 			ofstream myfile;
 			myfile.open(filename);
 
-			int coincidences = 0;
-			int maxCoincidences = 10;
 			for (int k = 0; k < msize[i]; k++)
 			{
 				string randSnd = get_random_sound();
 				if (matchStr(randSnd, mlists[i][k]))
 				{
-					// managed to choose the same sound that we want to replace.
-					if (++coincidences > maxCoincidences) {
-						// if this keeps happening then maybe this is the ONLY sound avaiable. No need to add a replacement line in that case.
-						continue;
-					}
-
-					// try another random sound
-					k--; 
+					i--;
 					continue;
 				}
 				res_list.insert("sound/" + randSnd);
@@ -791,9 +783,9 @@ void do_ent_sounds(Entity** ents, string mapname)
 		if (matchStr(cname,"func_button"))
 		{
 			string pushstr = ents[i]->keyvalues["sounds"];
-			int pushsnd = atoi(pushstr.c_str()) - 1; // 0 = no sound, 1 = first sound
+			int pushsnd = atoi(pushstr.c_str()) - 1;
 			if (pushsnd >= 0 && pushsnd < NUM_BUTTONS)
-				butts[pushsnd] = true;
+				butts[pushsnd-1] = true;
 
 			string lockstr = ents[i]->keyvalues["locked_sound"];
 			int locksnd = atoi(lockstr.c_str()) - 1;

@@ -195,8 +195,6 @@ void create_tex_embed_wad(vector<Wad>& wads)
 					continue; // texture stored in external wad
 				if (!tex_name.length() || tex_name.length() > MAXTEXTURENAME)
 					continue;
-				if (tex_name.find("xeno_grapple") == 0)
-					continue; // just in case we accidently read a randomized map
 				if (names.find(tex_name) != names.end() || unique.find(tex_name) != unique.end())
 				{
 					num_repeat++;
@@ -506,8 +504,7 @@ WADTEX ** loadRandomTextures(vector<string> wadTextures, vector<Wad>& wads)
 			}
 			string tex_name = wadTextures[i];
 			bool should_hook = grapple_mode == GRAPPLE_HOOK_ALWAYS || ((entMode == ENT_SUPER || corruptMode != CORRUPT_NONE) && grapple_mode == GRAPPLE_HOOK);
-			if (texMode != TEX_MASTERWAD && should_hook && tex_name.find("sky") != 0 && tex_name.find("aaatrigger") != 0)
-				tex_name = "xeno_grapple" + str(grapple_id++); // all textures by this name can be grappled
+
 			if (grapple_id > 999)
 			{
 				println("Too many textures!");
@@ -752,7 +749,7 @@ int makeMapWad(BSP * map, string map_name, vector<Wad>& wads)
 
 	//println("bsp has " + str(wadTextures.size()) + " replacable textures");
 
-	if (numTextures > 0 && texMode == TEX_MAP)
+	if (texMode == TEX_MAP)
 	{
 		delete [] map->lumps[LUMP_TEXTURES];
 		BSPTEXDATA * tex_lump = genTexLump(wadTextures,wads,map);
@@ -835,26 +832,9 @@ vector<string> unEmbedAllTextures(BSP * map, int& grapple_id, int& global_id)
 
 		string name = t->szName;
 		bool should_hook = grapple_mode == GRAPPLE_HOOK_ALWAYS || ((entMode == ENT_SUPER || corruptMode != CORRUPT_NONE) && grapple_mode == GRAPPLE_HOOK);
-		if (should_hook && !matchStr(t->szName, "sky") && !matchStr(t->szName, "aaatrigger") && t->szName[0] != '!' &&
-			t->szName[0] != '{')
+		if (should_hook && !matchStr(t->szName, "sky") && !matchStr(t->szName, "aaatrigger") && t->szName[0] != '!' && t->szName[0] != '{')
 		{
-			string gname;
-			if (masterWadRenames.find(toLowerCase(t->szName)) != masterWadRenames.end())
-				gname = masterWadRenames[toLowerCase(t->szName)];
-			else
-			{
-				gname = "xeno_grapple" + base36(grapple_id++);
-				if (base36(grapple_id).length() > 3)
-				{
-					println("Too many textures to grapple! " + str(grapple_id));
-					grapple_id = 0;
-				}
 
-				masterWadRenames[toLowerCase(t->szName)] = gname;
-			}
-
-			memcpy(t->szName, gname.c_str(), gname.length());
-			t->szName[gname.length()] = '\0';
 		}
 		/*
 		else if (!matchStr(t->szName, "sky"))
@@ -1025,18 +1005,7 @@ void embedAllTextures(BSP * map, Entity ** ents)
 
 		string name = t->szName;
 		bool should_hook = grapple_mode == GRAPPLE_HOOK_ALWAYS || ((entMode == ENT_SUPER || corruptMode != CORRUPT_NONE) && grapple_mode == GRAPPLE_HOOK);
-		if (should_hook && !matchStr(t->szName, "sky") && !matchStr(t->szName, "aaatrigger") && t->szName[0] != '!' &&
-			t->szName[0] != '{')
-		{
-			string gname = "xeno_grapple" + str(grapple_id++);
-			if (grapple_id > 999)
-			{
-				println("Too many textures! " + str(grapple_id));
-				grapple_id -= 1000;
-			}
-			memcpy(t->szName, gname.c_str(), gname.length());
-			t->szName[gname.length()] = '\0';
-		}
+		
 		
 		if (t->nOffsets[0] == 0 || t->nOffsets[0] + offset + szAll > lump_len) // texture stored in external wad
 		{
