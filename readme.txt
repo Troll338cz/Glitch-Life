@@ -1,4 +1,9 @@
 
+-------------------------- Q!! Note !! --------------------------
+This version of Glitch-Life randomiser makes maps mutch more corrupted
+if the "blend" option is enabled, this can (most likely will) result is crashes 
+on some maps.
+
 -------------------------- Quick Start Guide --------------------------
 
 1) Place the files in your 'svencoop_addon' folder. That folder is located here:
