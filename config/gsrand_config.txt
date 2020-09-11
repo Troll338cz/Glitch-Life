@@ -5,7 +5,7 @@
 // due to lots of filesystem checks, and vertex blending is very unstable
 // on dedicated servers.
 
-singleplayer = 1
+singleplayer = 0
 
 // sentence randomization (monster talking sounds) requires a ton of custom
 // sounds to be precached (somewhere around 1000). In the past, this was 
@@ -101,7 +101,7 @@ random_gravity = 1
 // If set to "1" then the grapple will not attach to walls when provided.
 // If set to "0" then the grapple will not be provided no matter what options are used.
 
-grapple_mode = 2
+grapple_mode = 0
 
 // skill modes are used to control the destructive power of weapons and monsters.
 // weapon_skill_mode settings:
@@ -113,8 +113,8 @@ grapple_mode = 2
 //    1 = dodgeable monster attacks deal SUPER damage (melee, slow projectiles)
 //    2 = all monster attacks will deal SUPER damage
 
-weapon_skill_mode = 1
-monster_skill_mode = 1
+weapon_skill_mode = 0
+monster_skill_mode = 0
 
 // the following settings determine what happens when "Corruption Mode"
 // is set to "Use config settings".
@@ -151,8 +151,8 @@ monster_skill_mode = 1
 // the randomizer will apply random corruptions from the "corruptions" list.
 // "corruption_scale" and "corruption_blend" are ignored in "random" mode.
 
-corruption_mode  = random
-corruptions      = flip blend weird shift grey bw contrast invert
+corruption_mode  = constant
+corruptions      = blend weird disco random
 corruption_scale = 0.5
 corruption_blend = 4     // values bigger than 4 are unsafe - expect crashes.
 
@@ -203,5 +203,3 @@ texture_compression = 0
 //     *hlsp_classic = Classic (unmodified) Half-Life (c0a0 to c5a1)
 
 [maps]
-svencoop1
-*hlsp
