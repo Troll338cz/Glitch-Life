@@ -13,7 +13,8 @@ on some maps. Otherwise its effects are mostly same
  4) Model   Mode : Do not change
  5) Sound   Mode : Everything
  6) Content Mode : Everything
- 7) Map Prefix   : gsrand_```
+ 7) Map Prefix   : gsrand_
+ ```
 
 
 -------------------------- Quick Start Guide --------------------------
