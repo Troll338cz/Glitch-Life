@@ -4,6 +4,18 @@ This version of Glitch-Life randomiser makes maps much more corrupted
 if the "blend" option is enabled, this can (most likely will) result is crashes 
 on some maps. Otherwise its effects are mostly same
 
+
+-------------------------- Recommended Settings --------------------------
+```bash
+ 1) Texture Mode : Write to map
+ 2) Entity  Mode : Super random
+ 3) Corrupt Mode : Use config settings
+ 4) Model   Mode : Do not change
+ 5) Sound   Mode : Everything
+ 6) Content Mode : Everything
+ 7) Map Prefix   : gsrand_```
+
+
 -------------------------- Quick Start Guide --------------------------
 
 1) Place the files in your 'svencoop_addon' folder. That folder is located here:
