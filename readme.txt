@@ -1,8 +1,8 @@
 
--------------------------- Q!! Note !! --------------------------
-This version of Glitch-Life randomiser makes maps mutch more corrupted
+-------------------------- !! Note !! --------------------------
+This version of Glitch-Life randomiser makes maps much more corrupted
 if the "blend" option is enabled, this can (most likely will) result is crashes 
-on some maps.
+on some maps. Otherwise its effects are mostly same
 
 -------------------------- Quick Start Guide --------------------------
 
